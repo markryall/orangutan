@@ -1,0 +1,7 @@
+Orangutan is mocking library for use in testing .net code using ironruby.
+
+At this stage only the simplest of interfaces can be mocked.
+
+Hopefully that's better than nothing.
+
+

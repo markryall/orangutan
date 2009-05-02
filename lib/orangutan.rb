@@ -1,0 +1,2 @@
+class Orangutan
+end
