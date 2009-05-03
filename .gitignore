@@ -1,3 +1,4 @@
-spikes/Moq*
-spikes/nmock*
 spec/obj
+spec/*.dll
+spec/*.pdb
+*.swp

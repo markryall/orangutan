@@ -1,4 +1,4 @@
-require 'oranutan'
+require 'orangutan'
 
 describe Orangutan do
   before do
@@ -8,6 +8,6 @@ describe Orangutan do
   it 'should record method calls on a stub' do
     s = @o.stub 'foo'
     s.method1(1,2,3)
-    s.calls[0].should == Orangutan::Call('foo', :method1, [1,2,3])
+    s.calls[0].should == Orangutan::Call.new('foo', :method1, [1,2,3])
   end
 end

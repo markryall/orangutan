@@ -1,3 +1,3 @@
-require 'ClassLibrary\bin\Debug\ClassLibrary.dll'
+require 'ClassLibrary.dll'
 
 $consumer = ClassLibrary::Consumer.new

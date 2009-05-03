@@ -37,7 +37,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClosureFactory.cs" />
     <Compile Include="Consumer.cs" />
     <Compile Include="IConsumable.cs" />
   </ItemGroup>
