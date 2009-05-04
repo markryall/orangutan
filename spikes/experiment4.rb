@@ -1,7 +1,7 @@
 #demonstrates interaction with a moq instance
 
 require 'consumer'
-require 'mocks\Moq.3.0.308.2-bin\Moq.dll'
+require 'Moq.3.0.308.2\Moq.dll'
 
 mock = Moq::Mock.of(ClassLibrary::IConsumable).new
 # i hoped to be able to use this (hoping divine intervention would turn the proc into a linq expression):

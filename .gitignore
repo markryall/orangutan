@@ -2,3 +2,5 @@ spec/obj
 spec/*.dll
 spec/*.pdb
 *.swp
+spec/ClassLibrary.sln.cache
+spikes/ClassLibrary.dll

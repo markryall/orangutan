@@ -31,13 +31,15 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassWithANonVirtualMethod.cs" />
+    <Compile Include="ClassWithANonVirtualProperty.cs" />
+    <Compile Include="ClassWithAVirtualProperty.cs" />
     <Compile Include="Consumer.cs" />
-    <Compile Include="IConsumable.cs" />
+    <Compile Include="IHaveAMethod.cs" />
+    <Compile Include="ClassWithAVirtualMethod.cs" />
+    <Compile Include="IHaveAnEvent.cs" />
+    <Compile Include="IHaveAProperty.cs" />
   </ItemGroup>
 </Project>
