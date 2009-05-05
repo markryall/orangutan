@@ -17,9 +17,7 @@ class Expectation
   
   def matches? method, *args
     return false unless method == @method
-    puts 'SAME METHOD'
     return true unless @args
-    puts "HAVE ARGS"
     @args == args
   end
 end

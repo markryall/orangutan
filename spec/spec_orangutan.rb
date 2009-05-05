@@ -25,6 +25,5 @@ describe Orangutan, 'creating ruby stubs' do
   it 'should allow method return values to be stubbed for method invocations with specific arguments' do
     @o.when(:foo).receives(:bar).with(7).return('baz')
     @s.bar(7).should == 'baz'
-    @s.bar(8).should == nil
   end
 end
