@@ -4,3 +4,4 @@ spec/*.pdb
 *.swp
 spec/ClassLibrary.sln.cache
 spikes/ClassLibrary.dll
+lib/ClassLibrary.dll
