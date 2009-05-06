@@ -26,4 +26,11 @@ describe Orangutan, 'creating ruby stubs' do
     @o.when(:foo).receives(:bar).with(7).return('baz')
     @s.bar(7).should == 'baz'
   end
+  
+  it 'should allow stubbed methods to yield' do
+    @o.when(:foo).receives(:bar).with(7).yield('baz')
+    a = nil
+    @s.bar(7) {|s| a = s}
+    a.should == 'baz'
+  end  
 end
