@@ -68,7 +68,7 @@ class ClassWithEvent
     @blocks = []
   end
 
-  def add_my_event *args
+  def add_MyEvent *args
   end
 end
 

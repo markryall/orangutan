@@ -1,0 +1,1 @@
+Orangutan::Call = Struct.new(:name, :method, :args)

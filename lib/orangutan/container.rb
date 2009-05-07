@@ -1,0 +1,1 @@
+Orangutan::Container = Struct.new(:value)
