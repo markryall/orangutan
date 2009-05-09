@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     "README",
+     "Rakefile",
+     "VERSION",
      "lib/orangutan.rb",
      "lib/orangutan/call.rb",
      "lib/orangutan/chantek.rb",
@@ -21,9 +23,8 @@ Gem::Specification.new do |s|
      "lib/orangutan/container.rb",
      "lib/orangutan/expectation.rb",
      "lib/orangutan/raiser.rb",
-     "spec/ClassLibrary.csproj",
-     "spec/ClassLibrary.dll",
-     "spec/ClassLibrary.sln",
+     "orangutan.gemspec",
+     "prepare.cmd",
      "spec/ClassWithANonVirtualMethod.cs",
      "spec/ClassWithANonVirtualProperty.cs",
      "spec/ClassWithAVirtualMethod.cs",
@@ -32,9 +33,6 @@ Gem::Specification.new do |s|
      "spec/IHaveAMethod.cs",
      "spec/IHaveAProperty.cs",
      "spec/IHaveAnEvent.cs",
-     "spec/obj/Debug/ClassLibrary.csproj.FileListAbsolute.txt",
-     "spec/obj/Debug/ClassLibrary.dll",
-     "spec/obj/Debug/ClassLibrary.pdb",
      "spec/spec_chantek.rb",
      "spec/spec_chantek_clr.rb",
      "spec/spec_expectation.rb"

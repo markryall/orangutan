@@ -25,7 +25,7 @@ begin
     gemspec.email = "mark@ryall.name"
     gemspec.homepage = "http://github.com/markryall/orangutan"
     gemspec.description = "A mocking library that supports creation of ironruby mock objects (in addition to pure ruby ones)"
-    gemspec.files = FileList["README", "{bin,generators,lib,test,spec}/**/*"]
+    gemspec.files = FileList["[A-Z]*", "{lib,spec}/**/*.{rb,cs}"]
     gemspec.authors = ["Mark Ryall"]
     gemspec.rubyforge_project = 'orangutan'
   end
