@@ -1,7 +1,59 @@
-Orangutan is mocking library for use in testing .net code using ironruby.
+Orangutan is a mocking library.
 
-At this stage only the simplest of interfaces can be mocked.
+It allows you to create stub objects and to setup methods with return, yield and raise behaviours.
 
-Hopefully that's better than nothing.
+It can be used in testing .net code using ironruby.
 
+At this stage only the simplest of clr interfaces can be stubbed.
 
+Note that only stub instances of objects are created.  It can not create mocks of class methods.
+
+It works by recording all method calls so that assertions can be made about them after the fact.
+
+This means that orangutan can be used with any testing framework and in combination with other mock frameworks.
+
+Installation:
+
+gem install markryall-orangutan
+
+Usage:
+
+require 'orangutan'
+@o = Orangutan::Chantek.new
+
+# Creating a pure ruby stub
+@stub = @orangutan.stub :stub
+
+# Creating a stub that implements a clr interface
+@clr_stub = @orangutan.stub :clr_stub, :clr_interface => System::IDisposable
+
+# Setting up stub methods that return values
+@o.when(:stub).receives(:execute).with(7).return('baz')
+
+# Setting up stub methods that yield values
+@o.when(:stub).receives(:execute).with(7).yield('baz')
+
+# Setting up stub methods that raise errors
+@o.when(:stub).receives(:execute).with(7).raise('baz')
+
+# Checking recorded method calls
+# at this stage you need to scan the array of call structs recorded in @o.calls
+@o.calls[0].should == Orangutan::Call.new(:stub, :execute, [7])
+
+Questions:
+
+* Why Orangutan?
+
+My daughter likes orangutans and I couldn't think of a better name.  Both Sumatran and Bornean orangutans are endangered species so even if you intensely dislike this project or its implementation, at least you can be made aware of the plight of these spectacular creatures.
+
+* Did it have anything to do with Clyde in "Every Which Way But Loose"
+
+Definately not.  What a ridiculous question.  I'm appalled.
+
+* What's Chantek?
+
+Chantek is a famous orangutan that can solve sudokus and the rubik's cube - http://en.wikipedia.org/wiki/Chantek
+
+* Why do I not need to register this as a mock framework?
+
+Most frameworks such as rspec's mocks, mocha and stubba replace methods on existing classes.  Because this can't be done with this library - you can only create pure stub objects and setup method behaviours, there's nothing that needs to be undone at the end of a test/example.

@@ -12,9 +12,9 @@ class Orangutan::Chantek
 
   def stub name, params={}
     c = Class.new(Orangutan::CleanSlate) do
-      if params[:interface]
-        include params[:interface]
-        params[:interface].to_clr_type.get_methods.each do |m_info|
+      if params[:clr_interface]
+        include params[:clr_interface]
+        params[:clr_interface].to_clr_type.get_methods.each do |m_info|
           snake = m_info.name.scan(/[A-Z][a-z0-9]*/).map {|a|a.downcase}.join('_').to_sym
           define_method snake do |*args|
             yield_container, return_value, raiser = __react__ snake, args
