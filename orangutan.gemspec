@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{orangutan}
-  s.version = "0.0.0"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Ryall"]
@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
      "lib/orangutan/raiser.rb",
      "spec/ClassLibrary.csproj",
      "spec/ClassLibrary.dll",
-     "spec/ClassLibrary.pdb",
      "spec/ClassLibrary.sln",
      "spec/ClassWithANonVirtualMethod.cs",
      "spec/ClassWithANonVirtualProperty.cs",
@@ -44,6 +43,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/markryall/orangutan}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
+  s.rubyforge_project = %q{orangutan}
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{A mock objects library}
   s.test_files = [
