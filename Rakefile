@@ -6,7 +6,7 @@ end
 task :compile => 'spec/ClassLibrary.dll'
 
 desc 'run specs with bacon on ironruby'
-task :spec => :compile do
+task :bacon => :compile do
   system "ibacon -Ispec -a"
 end
 
@@ -27,6 +27,7 @@ begin
     gemspec.description = "A mocking library that supports creation of ironruby mock objects (in addition to pure ruby ones)"
     gemspec.files = FileList["README", "{bin,generators,lib,test,spec}/**/*"]
     gemspec.authors = ["Mark Ryall"]
+    gemspec.rubyforge_project = 'orangutan'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install jeweler"
