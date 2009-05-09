@@ -22,9 +22,10 @@ begin
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "orangutan"
     gemspec.summary = "A mock objects library"
-    gemspec.email = "mark@tyall.name"
+    gemspec.email = "mark@ryall.name"
     gemspec.homepage = "http://github.com/markryall/orangutan"
     gemspec.description = "A mocking library that supports creation of ironruby mock objects (in addition to pure ruby ones)"
+    gemspec.files = FileList["README", "{bin,generators,lib,test,spec}/**/*"]
     gemspec.authors = ["Mark Ryall"]
   end
 rescue LoadError
