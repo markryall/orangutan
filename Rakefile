@@ -16,3 +16,17 @@ end
     system "ir -I spec -I spikes spikes\\experiment#{i}.rb"
   end
 end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "orangutan"
+    gemspec.summary = "A mock objects library"
+    gemspec.email = "mark@tyall.name"
+    gemspec.homepage = "http://github.com/markryall/orangutan"
+    gemspec.description = "A mocking library that supports creation of ironruby mock objects (in addition to pure ruby ones)"
+    gemspec.authors = ["Mark Ryall"]
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install jeweler"
+end
