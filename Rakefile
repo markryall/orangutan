@@ -1,6 +1,6 @@
 desc 'build necessary assemblies for tests'
 task 'spec/ClassLibrary.dll' => FileList["spec/**/*.cs"] do
-  system "csc /target:library /out:spec\\ClassLibrary.dll  spec\\*.cs"
+  system "csc /target:library /out:spec\\ClassLibrary.dll  spec\\clr\\*.cs"
 end
 
 task :compile => 'spec/ClassLibrary.dll'

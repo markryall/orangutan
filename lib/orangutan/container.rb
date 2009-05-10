@@ -1,1 +1,3 @@
-Orangutan::Container = Struct.new(:value)
+module Orangutan 
+  Container = Struct.new(:value)
+end
