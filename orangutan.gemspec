@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{orangutan}
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Ryall"]
-  s.date = %q{2009-05-10}
+  s.date = %q{2009-05-11}
   s.description = %q{A mocking library that supports creation of ironruby mock objects (in addition to pure ruby ones)}
   s.email = %q{mark@ryall.name}
   s.extra_rdoc_files = [
@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
      "lib/orangutan.rb",
      "lib/orangutan/call.rb",
      "lib/orangutan/chantek.rb",
-     "lib/orangutan/clean_slate.rb",
      "lib/orangutan/container.rb",
      "lib/orangutan/expectation.rb",
      "lib/orangutan/raiser.rb",
