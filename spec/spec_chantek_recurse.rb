@@ -1,3 +1,5 @@
+require 'orangutan'
+
 module Orangutan
   describe Chantek, 'creating recursive ruby stubs' do
     before do
@@ -19,6 +21,11 @@ module Orangutan
       baz = bar.baz
       @o.calls[0].should == Call.new(:foo, :bar,[])
       @o.calls[1].should == Call.new(:"foo/bar", :baz,[])
+    end
+
+    it "should create recursive stubs" do
+      @foo.a.b.c
+      @o.stubs.keys.should == [:foo, :"foo/a", :"foo/a/b", :"foo/a/b/c"]
     end
   end
 end

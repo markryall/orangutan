@@ -8,13 +8,13 @@ module Orangutan
 
     def method_missing method, *args
       yield_container, return_container = __react__(method, args)
-      yield yield_container.value if yield_container && block_given?
+      yield *yield_container.value if yield_container && block_given?
       __return__(method, return_container)
     end
   private
     def __return__ method, return_container
-      return return_container.value if return_container
-      return @parent.stub(:"#{@name}/#{method}") if @recursive
+      return *return_container.value if return_container
+      return @parent.stub(:"#{@name}/#{method}", :recursive => true) if @recursive
       nil
     end
   

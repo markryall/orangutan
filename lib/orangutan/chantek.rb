@@ -4,7 +4,7 @@ require 'orangutan/call'
 
 module Orangutan 
   class Chantek
-    attr_reader :calls
+    attr_reader :calls, :stubs
   
     def initialize
       @calls = []
@@ -21,8 +21,8 @@ module Orangutan
             snake = m_info.name.scan(/[A-Z][a-z0-9]*/).map {|a|a.downcase}.join('_').to_sym
             define_method snake do |*args|
               yield_container, return_container = __react__(snake, args)
-              yield yield_container.value if yield_container && block_given?
-              __return__(method, return_container)
+              yield *yield_container.value if yield_container && block_given?
+              return __return__(method, return_container)
             end
           end
         end

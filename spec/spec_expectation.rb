@@ -26,8 +26,12 @@ module Orangutan
       @e.yield_container.should == nil
     end
   
-    it 'should store yield_value' do
-      @e.yield(1).yield_container.should == Container.new(1)
+    it 'should store yield value' do
+      @e.yield(1).yield_container.should == Container.new([1])
+    end
+
+    it 'should store multiple yield values' do
+      @e.yield(1,2).yield_container.should == Container.new([1,2])
     end
     
     it 'should not return by default' do
@@ -35,7 +39,11 @@ module Orangutan
     end
     
     it 'should store return value' do
-      @e.return(1).return_container.should == Container.new(1)
+      @e.return(1).return_container.should == Container.new([1])
+    end
+
+    it 'should store multiple return values' do
+      @e.return(1,2).return_container.should == Container.new([1,2])
     end
     
     it 'should not raise by default' do

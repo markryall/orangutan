@@ -15,12 +15,12 @@ module Orangutan
       self
     end
   
-    def return value
+    def return *value
       @return_container = Container.new value
       self
     end
     
-    def yield value
+    def yield *value
       @yield_container = Container.new value
       self
     end

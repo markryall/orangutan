@@ -21,17 +21,35 @@ describe Orangutan::Chantek, 'creating ruby stubs' do
     @o.when(:foo).receives(:bar).return('baz')
     @foo.bar.should == 'baz'
   end
+  
+  it 'should allow multiple method return values to be stubbed' do
+    @o.when(:foo).receives(:bar).return('baz', 'bat')
+    @foo.bar.should == ['baz', 'bat']
+  end
 
   it 'should allow method return values to be stubbed for method invocations with specific arguments' do
     @o.when(:foo).receives(:bar).with(7).return('baz')
     @foo.bar(7).should == 'baz'
   end
   
+  it 'should allow method return values to be stubbed for method invocations with multiple specific arguments' do
+    @o.when(:foo).receives(:bar).with(7,8).return('baz')
+    @foo.bar(7,8).should == 'baz'
+  end
+  
   it 'should allow stubbed methods to yield' do
     @o.when(:foo).receives(:bar).with(7).yield('baz')
-    a = nil
-    @foo.bar(7) {|s| a = s}
-    a.should == 'baz'
+    @foo.bar(7) do |v|
+      v.should == 'baz'
+    end
+  end
+
+  it 'should allow stubbed methods to yield multiple values' do
+    @o.when(:foo).receives(:bar).with(7).yield('baz', 'bar')
+    @foo.bar(7) do |a,b|
+      a.should == 'baz'
+      b.should == 'bar'
+    end
   end
 
   it 'should allow stubbed methods to yield nils' do
