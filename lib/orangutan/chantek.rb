@@ -45,6 +45,7 @@ module Orangutan
             return expectation if expectation.matches?(method, *args)
         end
       end
+      nil
     end
   end
 end

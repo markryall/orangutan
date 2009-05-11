@@ -31,7 +31,12 @@ describe Orangutan::Chantek, 'creating ruby stubs' do
     @o.when(:foo).receives(:bar).with(7).return('baz')
     @foo.bar(7).should == 'baz'
   end
-  
+
+  it 'should not match method invocations with incorrect specific arguments' do
+    @o.when(:foo).receives(:bar).with(7).return('baz')
+    @foo.bar(8).should == nil
+  end
+
   it 'should allow method return values to be stubbed for method invocations with multiple specific arguments' do
     @o.when(:foo).receives(:bar).with(7,8).return('baz')
     @foo.bar(7,8).should == 'baz'

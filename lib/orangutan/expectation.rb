@@ -5,6 +5,12 @@ module Orangutan
   class Expectation
     attr_reader :return_container, :yield_container, :raiser
     
+    def initialize
+      @return_container = nil
+      @yield_container = nil
+      @raiser = nil
+    end
+    
     def receives method
       @method = method
       self

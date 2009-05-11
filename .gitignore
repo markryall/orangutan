@@ -2,4 +2,5 @@ spec/obj
 spec/*.pdb
 *.swp
 pkg/
+spec/ClassLibrary.dll
 spec/ClassLibrary.sln.cache
