@@ -49,11 +49,24 @@ expectation.should be_matched
 # Note that once an expectation has reached its limit, it will no longer match.
 # Expections will match in the order they are specified.
 # This mechanism can be used to set up more complex expected call sequences:
-e1 = @o.when(:stub).receives(:execute).with(7).once
-e2 = @o.when(:stub).receives(:execute).twice
+
+e1 = @o.when(:stub).receives(:execute).with(7).return('ok').once
+e2 = @o.when(:stub).receives(:execute).return('hmm').twice
+
 puts e1.count (=> 0)
 puts e2.count (=> 0)
-@stub.execute(7)
+@stub.execute(7) (=> 'ok')
+puts e1.count (=> 1)
+puts e2.count (=> 0)
+@stub.execute(7) (=> 'hmm')
+puts e1.count (=> 1)
+puts e2.count (=> 1)
+@stub.execute(7) (=> 'hmm')
+puts e1.count (=> 1)
+puts e2.count (=> 2)
+@stub.execute(7) (=> nil)
+puts e1.count (=> 1)
+puts e2.count (=> 2)
 
 # Examining recorded method calls
 @o.calls.each {|call| puts "#{call.name}.#{call.method}(#{call.args.join(',')})" }
