@@ -4,7 +4,7 @@ require 'orangutan/call'
 
 module Orangutan 
   class Chantek
-    attr_reader :calls, :stubs
+    attr_reader :calls, :stubs, :expectations
   
     def initialize
       @calls = []
