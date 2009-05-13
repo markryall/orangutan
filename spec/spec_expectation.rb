@@ -53,5 +53,51 @@ module Orangutan
     it 'should store raiser' do
       @e.raise('description').raiser.should.not == nil
     end
+    
+    it 'should count matches' do
+      (1..10).each do |i|
+        @e.matches?(:foo)
+        @e.count.should == i
+      end
+    end
+
+    it 'should limit matches when given limit of once' do
+      @e.once.should == @e
+      @e.matches?(:foo).should == true
+      @e.matches?(:foo).should == false
+    end  
+    
+    it 'should limit matches when given limit of twice' do
+      @e.twice.should == @e
+      2.times { @e.matches?(:foo).should == true }
+      @e.matches?(:foo).should == false
+    end
+
+    it 'should limit matches' do
+      @e.exactly(10).times.should == @e
+      10.times { @e.matches?(:foo).should == true }
+      @e.matches?(:foo).should == false
+    end
+    
+    it 'should initially indicate that expectation was not matched' do
+      @e.should.not.be.matched?
+    end
+  
+    it 'should when no limit specified indicate that the expectation was matched once' do
+      @e.matches?(:foo)
+      @e.should.be.matched?
+    end
+    
+    it 'should when a limit specified indicate that the expectation was not matched until the is limit reached' do
+      @e.twice
+      @e.matches?(:foo)
+      @e.should.not.be.matched?
+    end
+
+    it 'should when a limit specified indicate that the expectation was matched once the is limit reached' do
+      @e.twice
+      2.times { @e.matches?(:foo) }
+      @e.should.be.matched?
+    end
   end
 end
