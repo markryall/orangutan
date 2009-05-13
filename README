@@ -1,6 +1,6 @@
-Orangutan is a mocking library.
+Orangutan is a library for creating stubs.
 
-It allows you to create stub objects and to setup methods with return, yield and raise behaviours.
+It allows you to create stub objects and to specify methods to return and yield values as well as to raise errors.
 
 It can be used in testing .net code using ironruby although at this stage only the simplest of clr interfaces can be stubbed.
 
@@ -15,7 +15,7 @@ Installation:
 
 gem install orangutan
 
-Usage:
+Some examples of usage (note that these are not in the context of any testing framework and are intended only to indicate how to use the api):
 
 require 'orangutan'
 @o = Orangutan::Chantek.new
@@ -37,8 +37,9 @@ require 'orangutan'
 
 # checking whether an expectation was met
 expectation = @o.when(:stub).receives(:execute).with(7)
-...
-expectation.should be_matched
+puts expectation.matched? (=> false)
+@stub.execute(7)
+puts expectation.matched? (=> false)
 
 # setting limits on expectations
 
@@ -53,11 +54,11 @@ expectation.should be_matched
 e1 = @o.when(:stub).receives(:execute).with(7).return('ok').once
 e2 = @o.when(:stub).receives(:execute).return('hmm').twice
 
-puts e1.count (=> 0)
-puts e2.count (=> 0)
+puts e1.count (=> nil)
+puts e2.count (=> nil)
 @stub.execute(7) (=> 'ok')
 puts e1.count (=> 1)
-puts e2.count (=> 0)
+puts e2.count (=> nil)
 @stub.execute(7) (=> 'hmm')
 puts e1.count (=> 1)
 puts e2.count (=> 1)
@@ -67,12 +68,16 @@ puts e2.count (=> 2)
 @stub.execute(7) (=> nil)
 puts e1.count (=> 1)
 puts e2.count (=> 2)
+puts e1.matched? (=> true)
+puts e2.matched? (=> true)
+
+# Checking all expectations
+@.expectations.any? {|e| !e.matched? }
 
 # Examining recorded method calls
 @o.calls.each {|call| puts "#{call.name}.#{call.method}(#{call.args.join(',')})" }
 
-# Recorded call sequences can also be used for assertions in combination with or instead
-# of checking expectations.
+# Recorded call sequences can also be used for assertions in combination with or instead of checking expectations.
 
 Questions:
 
