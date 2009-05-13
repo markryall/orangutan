@@ -2,19 +2,18 @@ Orangutan is a mocking library.
 
 It allows you to create stub objects and to setup methods with return, yield and raise behaviours.
 
-It can be used in testing .net code using ironruby.
-
-At this stage only the simplest of clr interfaces can be stubbed.
+It can be used in testing .net code using ironruby although at this stage only the simplest of clr interfaces can be stubbed.
 
 Note that only stub instances of objects are created.  It can not create mocks of class methods.
 
-It works by recording all method calls so that assertions can be made about them after the fact.
+It works by recording all method calls so that assertions can be made about them after the fact and providing a simple
+dsl for setting up stubbed methods (which can be used as expectations to assert on later).
 
-This means that orangutan can be used with any testing framework and in combination with other mock frameworks.
+Orangutan can be used with any testing framework and in combination with other mock frameworks.
 
 Installation:
 
-gem install markryall-orangutan
+gem install orangutan
 
 Usage:
 
@@ -36,9 +35,31 @@ require 'orangutan'
 # Setting up stub methods that raise errors
 @o.when(:stub).receives(:execute).with(7).raise('baz')
 
-# Checking recorded method calls
-# at this stage you need to scan the array of call structs recorded in @o.calls
-@o.calls[0].should == Orangutan::Call.new(:stub, :execute, [7])
+# checking whether an expectation was met
+expectation = @o.when(:stub).receives(:execute).with(7)
+...
+expectation.should be_matched
+
+# setting limits on expectations
+
+@o.when(:stub).receives(:execute).with(7).once
+@o.when(:stub).receives(:execute).with(7).twice
+@o.when(:stub).receives(:execute).with(7).exactly(4).times
+
+# Note that once an expectation has reached its limit, it will no longer match.
+# Expections will match in the order they are specified.
+# This mechanism can be used to set up more complex expected call sequences:
+e1 = @o.when(:stub).receives(:execute).with(7).once
+e2 = @o.when(:stub).receives(:execute).twice
+puts e1.count (=> 0)
+puts e2.count (=> 0)
+@stub.execute(7)
+
+# Examining recorded method calls
+@o.calls.each {|call| puts "#{call.name}.#{call.method}(#{call.args.join(',')})" }
+
+# Recorded call sequences can also be used for assertions in combination with or instead
+# of checking expectations.
 
 Questions:
 
