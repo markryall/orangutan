@@ -21,7 +21,9 @@ module Orangutan
             snake = m_info.name.scan(/[A-Z][a-z0-9]*/).map {|a|a.downcase}.join('_').to_sym
             define_method snake do |*args|
               yield_container, return_container = __react__(snake, args)
-              yield *yield_container.value if yield_container && block_given?
+              if yield_container && block_given?
+                yield_container.value.each {|v| yield *v }
+              end
               return __return__(method, return_container)
             end
           end

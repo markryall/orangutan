@@ -27,7 +27,8 @@ module Orangutan
     end
     
     def yield *value
-      @yield_container = Container.new value
+      @yield_container ||= Container.new([])
+      @yield_container.value << value
       self
     end
     

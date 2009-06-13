@@ -8,7 +8,9 @@ module Orangutan
 
     def method_missing method, *args
       yield_container, return_container = __react__(method, args)
-      yield *yield_container.value if yield_container && block_given?
+      if yield_container && block_given?
+        yield_container.value.each {|v| yield *v }
+      end
       __return__(method, return_container)
     end
   private

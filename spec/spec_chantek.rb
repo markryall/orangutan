@@ -56,6 +56,15 @@ describe Orangutan::Chantek, 'creating ruby stubs' do
       b.should == 'bar'
     end
   end
+  
+  it 'should allow stubbed methods to yield multiple times' do
+    @o.when(:foo).receives(:bar).with(7).yield('baz').yield('bar')
+    yields = []
+    @foo.bar(7) do |a|
+      yields << a
+    end
+    yields.should == ['baz','bar']
+  end
 
   it 'should allow stubbed methods to yield nils' do
     @o.when(:foo).receives(:bar).yield(nil)
