@@ -2,7 +2,7 @@ using System;
 
 namespace ClassLibrary
 {
-	public class ClassWithAnVirtualMethod : IHaveAMethod
+	public class ClassWithAVirtualMethod : IHaveAMethod
 	{		
 		public virtual bool MyMethod(string parameter)
 		{

@@ -7,18 +7,21 @@ class ClassWithMethod
 
   def my_method name
     puts 'ruby method invoked with ' + name
+    true
   end
 end
 
-class ClassWithOverridenMethod < ClassLibrary::ClassWithAnVirtualMethod
+class ClassWithOverridenMethod < ClassLibrary::ClassWithAVirtualMethod
   def my_method name
     puts 'ruby method method invoked with ' + name
+    true
   end
 end
 
 class ClassWithPotentiallyOverridenMethod < ClassLibrary::ClassWithANonVirtualMethod
   def my_method name
     puts 'ruby method invoked with ' + name
+    true
   end
 end
 
@@ -68,7 +71,8 @@ class ClassWithEvent
     @blocks = []
   end
 
-  def add_MyEvent *args
+  def add_MyEvent args, &block
+    puts arg.inspect
   end
 end
 

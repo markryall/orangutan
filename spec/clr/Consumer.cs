@@ -8,7 +8,8 @@ namespace ClassLibrary
 		
 		public void CallMethod(IHaveAMethod consumable)
 		{
-			consumable.MyMethod("thing");
+			if (consumable.MyMethod("thing")) Console.WriteLine("Received true");
+      else Console.WriteLine("Received false");
 		}
 		
 		public void RegisterEvent(IHaveAnEvent e)
