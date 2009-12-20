@@ -31,7 +31,7 @@ module Orangutan
       @yield_container.value << value
       self
     end
-    
+
     def raise *args
       @raiser = Raiser.new args
       self

@@ -31,7 +31,7 @@ module Orangutan
     end
 
     it 'should store multiple yield values' do
-      @e.yield(1,2).yield_container.should == Container.new([1,2])
+      @e.yield(1,2).yield_container.should == Container.new([[1,2]])
     end
     
     it 'should not return by default' do
@@ -51,7 +51,7 @@ module Orangutan
     end
     
     it 'should store raiser' do
-      @e.raise('description').raiser.should.not == nil
+      @e.raise('description').raiser.should_not == nil
     end
     
     it 'should count matches' do
@@ -80,24 +80,24 @@ module Orangutan
     end
     
     it 'should initially indicate that expectation was not matched' do
-      @e.should.not.be.matched?
+      @e.should_not be_matched
     end
   
     it 'should when no limit specified indicate that the expectation was matched once' do
       @e.matches?(:foo)
-      @e.should.be.matched?
+      @e.should be_matched
     end
     
     it 'should when a limit specified indicate that the expectation was not matched until the is limit reached' do
       @e.twice
       @e.matches?(:foo)
-      @e.should.not.be.matched?
+      @e.should_not be_matched
     end
 
     it 'should when a limit specified indicate that the expectation was matched once the is limit reached' do
       @e.twice
       2.times { @e.matches?(:foo) }
-      @e.should.be.matched?
+      @e.should be_matched
     end
   end
 end
