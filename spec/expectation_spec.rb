@@ -1,4 +1,4 @@
-require 'orangutan'
+require File.dirname(__FILE__) + '/spec_helper'
 
 module Orangutan
   describe Expectation do

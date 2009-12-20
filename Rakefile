@@ -5,9 +5,9 @@ end
 
 task :compile => 'spec/ClassLibrary.dll'
 
-desc 'run specs with bacon on ironruby'
-task :bacon => :compile do
-  system "ibacon -Ispec -a"
+desc 'specs'
+task :spec => :compile do
+  system "spec spec"
 end
 
 (1..4).each do |i|
@@ -15,20 +15,4 @@ end
   task "spike#{i}" do
     system "ir -I spec -I spikes spikes\\experiment#{i}.rb"
   end
-end
-
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "orangutan"
-    gemspec.summary = "A mock objects library"
-    gemspec.email = "mark@ryall.name"
-    gemspec.homepage = "http://github.com/markryall/orangutan"
-    gemspec.description = "A mocking library that supports creation of ironruby mock objects (in addition to pure ruby ones)"
-    gemspec.files = FileList["[A-Z]*", "{lib,spec}/**/*.{rb,cs}"]
-    gemspec.authors = ["Mark Ryall"]
-    gemspec.rubyforge_project = 'orangutan'
-  end
-rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install jeweler"
 end

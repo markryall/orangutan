@@ -1,4 +1,4 @@
-require 'orangutan'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe Orangutan::Chantek, 'creating ruby stubs' do
   before do

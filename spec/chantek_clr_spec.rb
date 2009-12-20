@@ -1,5 +1,4 @@
-require 'orangutan'
-require 'ClassLibrary.dll'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe Orangutan::Chantek, 'creating clr stubs' do
   it 'should create stub implementations of a clr interface with a method' do

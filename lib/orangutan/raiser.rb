@@ -4,7 +4,6 @@ class Orangutan::Raiser
   end
 
   def execute
-    puts 'RAISING ' + @args.inspect
     raise *@args
   end
 end
