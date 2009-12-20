@@ -72,7 +72,7 @@ class ClassWithEvent
   end
 
   def add_MyEvent args, &block
-    puts arg.inspect
+    puts args.inspect
   end
 end
 
