@@ -18,41 +18,44 @@ gem install orangutan
 Some examples of usage (note that these are not in the context of any testing framework and are intended only to indicate how to use the api):
 
 require 'orangutan'
-@o = Orangutan::Chantek.new
+
+include Orangutan::Chantek
+
+reset_stubs
 
 # Creating a pure ruby stub
-@stub = @orangutan.stub :stub
+@stub = stub :stub
 
 # Creating a stub that implements a clr interface
-@clr_stub = @orangutan.stub :clr_stub, :clr_interface => System::IDisposable
+@clr_stub = stub :clr_stub, :clr_interface => System::IDisposable
 
 # Setting up stub methods that return values
-@o.when(:stub).receives(:execute).with(7).return('baz')
+so_when(:stub).receives(:execute).with(7).return('baz')
 
 # Setting up stub methods that yield values
-@o.when(:stub).receives(:execute).with(7).yield('baz')
+so_when(:stub).receives(:execute).with(7).yield('baz')
 
 # Setting up stub methods that raise errors
-@o.when(:stub).receives(:execute).with(7).raise('baz')
+so_when(:stub).receives(:execute).with(7).raise('baz')
 
 # checking whether an expectation was met
-expectation = @o.when(:stub).receives(:execute).with(7)
+expectation = so_when(:stub).receives(:execute).with(7)
 puts expectation.matched? (=> false)
 @stub.execute(7)
 puts expectation.matched? (=> false)
 
 # setting limits on expectations
 
-@o.when(:stub).receives(:execute).with(7).once
-@o.when(:stub).receives(:execute).with(7).twice
-@o.when(:stub).receives(:execute).with(7).exactly(4).times
+so_when(:stub).receives(:execute).with(7).once
+so_when(:stub).receives(:execute).with(7).twice
+so_when(:stub).receives(:execute).with(7).exactly(4).times
 
 # Note that once an expectation has reached its limit, it will no longer match.
 # Expections will match in the order they are specified.
 # This mechanism can be used to set up more complex expected call sequences:
 
-e1 = @o.when(:stub).receives(:execute).with(7).return('ok').once
-e2 = @o.when(:stub).receives(:execute).return('hmm').twice
+e1 = so_when(:stub).receives(:execute).with(7).return('ok').once
+e2 = so_when(:stub).receives(:execute).return('hmm').twice
 
 puts e1.count (=> nil)
 puts e2.count (=> nil)
@@ -72,10 +75,10 @@ puts e1.matched? (=> true)
 puts e2.matched? (=> true)
 
 # Checking all expectations
-@.expectations.any? {|e| !e.matched? }
+expectations.any? {|e| !e.matched? }
 
 # Examining recorded method calls
-@o.calls.each {|call| puts "#{call.name}.#{call.method}(#{call.args.join(',')})" }
+calls.each {|call| puts "#{call.name}.#{call.method}(#{call.args.join(',')})" }
 
 # Recorded call sequences can also be used for assertions in combination with or instead of checking expectations.
 
