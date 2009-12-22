@@ -4,33 +4,28 @@ namespace ClassLibrary
 {
 	public class Consumer 
 	{
-		private int count = 0;
 		private IHaveAnEvent eventThing;
+		private string getterValue;
 
 		public void CallMethod(IHaveAMethod consumable)
 		{
-			if (consumable.MyMethod("thing")) Console.WriteLine("Received true");
-			else Console.WriteLine("Received false");
+			consumable.MyMethod("thing");
 		}
 
 		public void RegisterEvent(IHaveAnEvent e)
 		{
 		 	eventThing = e;
-			e.MyEvent += (s,ev) => {
-				eventThing.MyMethod("thing");
-				count++;
-			};
+			e.MyEvent += (s,ev) => eventThing.MyMethod("thing");
 		}
 
 		public void CallSetter(IHaveAProperty p)
 		{
-			p.MyProperty = ""+count;
-			count++;
+			p.MyProperty = getterValue;
 		}
 
 		public void CallGetter(IHaveAProperty p)
 		{
-			Console.WriteLine(p.MyProperty);
+			getterValue = p.MyProperty;
 		}
 	}
 }

@@ -11,29 +11,44 @@ module Orangutan
       @calls = []
       @expectations = {}
       @stubs= {}
+      @events = {}
     end
   
     def stub name, params={}
       return @stubs[name] if @stubs[name]
-      c = Class.new(StubBase)
-      implement_interface c, params[:clr_interface]
-      @stubs[name] = c.new(name, self, params[:recursive])
+      clazz = Class.new(StubBase)
+      @events[name] = {}
+      implement_interface clazz, params[:clr_interface], @events[name]
+      @stubs[name] = clazz.new(name, self, params[:recursive])
     end
 
-    def implement_interface clazz, interface
+    def implement_interface clazz, interface, events
       return unless interface
       reflector = Reflector.new(interface)
-      clazz.instance_eval do
-        include interface
+      clazz.instance_eval { include interface }
+      reflector.methods.each {|method| implement_method clazz, method }
+      reflector.events.each do |event|
+        events[event] = []
+        implement_event clazz, event, events[event]
+      end
+    end
 
-        reflector.methods.each do |name|
-          define_method name do |*args|
-            yield_container, return_container = __react__(name, args)
-            if yield_container && block_given?
-              yield_container.value.each {|v| yield *v }
-            end
-            return __return__(method, return_container)
-          end
+    def implement_method clazz, name
+      clazz.instance_eval do
+        define_method name do |*args|
+          yield_container, return_container = __react__(name, args)
+          yield_container.value.each {|v| yield *v } if yield_container && block_given?
+          return __return__(name, return_container)
+        end
+      end
+    end
+
+    def implement_event clazz, name, delegates
+      method = "add_#{name}".to_sym
+      clazz.instance_eval do
+        define_method method  do |delegate|
+          __react__(method, [])
+          delegates << delegate
         end
       end
     end
@@ -57,6 +72,12 @@ module Orangutan
     end
 
     def fire_event name, event, *args
+      events_for_name = @events[name]
+      raise "failed to find any events for #{name}" unless events_for_name
+      # it makes no sense, but 'events_for_name[event]' returns nil so in desperation, we iterate over the events
+      events_for_name.each do |event_name,delegates|
+        delegates.each { |delegate| delegate.invoke *args } if event_name == event
+      end
     end
   end
 end
