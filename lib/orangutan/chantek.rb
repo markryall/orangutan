@@ -4,16 +4,20 @@ require 'orangutan/call'
 require 'orangutan/reflector'
 
 module Orangutan 
-  class Chantek
+  module Chantek
     attr_reader :calls, :stubs, :expectations
-  
-    def initialize
+
+    def call name, method, *args
+      Call.new(name, method, args)
+    end
+
+    def reset_stubs
       @calls = []
       @expectations = {}
       @stubs= {}
       @events = {}
     end
-  
+
     def stub name, params={}
       return @stubs[name] if @stubs[name]
       clazz = Class.new(StubBase)
@@ -53,7 +57,7 @@ module Orangutan
       end
     end
 
-    def when name
+    def so_when name
       expectations_for_name = @expectations[name]
       @expectations[name] = expectations_for_name = [] unless expectations_for_name
       expectation = Orangutan::Expectation.new
