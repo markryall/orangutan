@@ -68,11 +68,20 @@ class ClassWithEvent
   include ClassLibrary::IHaveAnEvent
 
   def initialize
-    @blocks = []
+    @delegates = []
   end
 
-  def add_MyEvent args, &block
-    puts args.inspect
+  def add_MyEvent delegate
+    @delegates << delegate
+  end
+
+  def my_method name
+    puts 'ruby method invoked with ' + name
+    true
+  end
+
+  def fire_event
+    @delegates.each {|delegate| delegate.invoke(self, System::EventArgs.new)}
   end
 end
 
@@ -90,5 +99,8 @@ end
   $consumer.call_getter(c2)
 end
 
+puts 'trying ClassWithEvent'
 c3 = ClassWithEvent.new
 $consumer.register_event(c3)
+c3.fire_event
+c3.fire_event

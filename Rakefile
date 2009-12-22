@@ -17,7 +17,7 @@ end
 (1..4).each do |i|
   p = Pathname.new('spikes')
   desc "run spike #{i}"
-  task "spike#{i}" do
+  task "spike#{i}" => :compile do
     sh "ir -I spec -I spikes #{p+'experiment'}#{i}.rb"
   end
 end

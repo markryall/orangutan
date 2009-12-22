@@ -1,6 +1,7 @@
 require 'orangutan/stub_base'
 require 'orangutan/expectation'
 require 'orangutan/call'
+require 'orangutan/reflector'
 
 module Orangutan 
   class Chantek
@@ -14,24 +15,29 @@ module Orangutan
   
     def stub name, params={}
       return @stubs[name] if @stubs[name]
-      c = Class.new(StubBase) do
-        if params[:clr_interface]
-          include params[:clr_interface]
-          params[:clr_interface].to_clr_type.get_methods.each do |m_info|
-            snake = m_info.name.scan(/[A-Z][a-z0-9]*/).map {|a|a.downcase}.join('_').to_sym
-            define_method snake do |*args|
-              yield_container, return_container = __react__(snake, args)
-              if yield_container && block_given?
-                yield_container.value.each {|v| yield *v }
-              end
-              return __return__(method, return_container)
+      c = Class.new(StubBase)
+      implement_interface c, params[:clr_interface]
+      @stubs[name] = c.new(name, self, params[:recursive])
+    end
+
+    def implement_interface clazz, interface
+      return unless interface
+      reflector = Reflector.new(interface)
+      clazz.instance_eval do
+        include interface
+
+        reflector.methods.each do |name|
+          define_method name do |*args|
+            yield_container, return_container = __react__(name, args)
+            if yield_container && block_given?
+              yield_container.value.each {|v| yield *v }
             end
+            return __return__(method, return_container)
           end
         end
       end
-      @stubs[name] = c.new(name, self, params[:recursive])
     end
-  
+
     def when name
       expectations_for_name = @expectations[name]
       @expectations[name] = expectations_for_name = [] unless expectations_for_name
@@ -48,6 +54,9 @@ module Orangutan
         end
       end
       nil
+    end
+
+    def fire_event name, event, *args
     end
   end
 end
