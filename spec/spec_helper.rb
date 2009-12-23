@@ -1,18 +1,7 @@
-module NoMocksAdapter
-  def setup_mocks_for_rspec
-  end
-
-  def verify_mocks_for_rspec
-  end
-
-  def teardown_mocks_for_rspec
-  end
-end
+require 'orangutan/mock_adapter'
+require 'ClassLibrary.dll'
 
 Spec::Runner.configure do |config|
   # turn off mocking
-  config.mock_with NoMocksAdapter
+  config.mock_with Orangutan::MockAdapter
 end
-
-require 'orangutan'
-require 'ClassLibrary.dll'

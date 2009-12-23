@@ -1,10 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe 'creating ruby stubs' do
-  include Orangutan::Chantek
-
   before do
-    reset_stubs
     @foo = stub(:foo)
   end
 

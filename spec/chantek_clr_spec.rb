@@ -1,10 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe 'creating clr stubs' do
-  include Orangutan::Chantek
-
   before do
-    reset_stubs
     @consumer = ClassLibrary::Consumer.new
   end
 
