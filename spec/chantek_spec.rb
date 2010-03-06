@@ -12,7 +12,7 @@ describe 'creating ruby stubs' do
 
   it 'should record all ordinary object methods calls (except __send__ and __id__)' do
     methods = Object.new.methods
-    methods.each { |m| @foo.__send__(m.to_sym) unless m =~ /^__/ }
+    methods.each { |m| @foo.__send__(m.to_sym) {} unless m =~ /^__/ }
     calls.length.should == (methods.length-2)
   end
 

@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
+if ENV['CLR']
 describe 'creating clr stubs' do
   before do
     @consumer = ClassLibrary::Consumer.new
@@ -40,4 +41,5 @@ describe 'creating clr stubs' do
       call(:foo, :my_method, 'thing')
     ]
   end
+end
 end

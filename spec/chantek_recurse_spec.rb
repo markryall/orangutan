@@ -22,6 +22,6 @@ describe 'creating recursive ruby stubs' do
 
   it "should create recursive stubs" do
     @foo.a.b.c
-    stubs.keys.should == [:foo, :"foo/a", :"foo/a/b", :"foo/a/b/c"]
+    stubs.keys.map{|s|s.to_s}.sort.should == ['foo', 'foo/a', 'foo/a/b', 'foo/a/b/c']
   end
 end

@@ -27,7 +27,7 @@ module Orangutan
     end
   
     it 'should store yield value' do
-      @e.yield(1).yield_container.should == Container.new([1])
+      @e.yield(1).yield_container.should == Container.new([[1]])
     end
 
     it 'should store multiple yield values' do

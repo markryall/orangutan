@@ -1,7 +1,9 @@
+require 'orangutan/object_extensions'
 require 'orangutan/stub_base'
 require 'orangutan/expectation'
 require 'orangutan/call'
 require 'orangutan/reflector'
+require 'orangutan/stub_include'
 
 module Orangutan 
   module Chantek
@@ -16,6 +18,30 @@ module Orangutan
       @expectations = {}
       @stubs= {}
       @events = {}
+    end
+
+    def register_object name, object
+      @stubs[name] ||= object
+    end
+
+    def stub_method name, method
+      object = @stubs[name]
+      raise "could not find an object registered with the name #{name}" unless object
+      chantek = self
+      object.instance_eval do
+        @parent = chantek
+        @name = name
+      end
+      object.eigen_eval do
+        alias_method("__unstubbed_#{method}", method)
+      end
+      implement_method object.eigen, method
+    end
+    
+    def restore_method name, method
+      @stubs[name].eigen_eval do
+        alias_method(method, "__unstubbed_#{method}")
+      end
     end
 
     def stub name, params={}
@@ -39,6 +65,8 @@ module Orangutan
 
     def implement_method clazz, name
       clazz.instance_eval do
+        include StubInclude
+
         define_method name do |*args|
           yield_container, return_container = __react__(name, args)
           yield_container.value.each {|v| yield *v } if yield_container && block_given?
