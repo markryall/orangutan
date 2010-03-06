@@ -4,12 +4,14 @@ It allows you to create stub objects and to specify methods to return and yield 
 
 It can be used in testing .net code using ironruby although at this stage only the simplest of clr interfaces can be stubbed.
 
-Note that only stub instances of objects are created.  It can not create mocks of class methods.
+It is intended that you could test java classes in exactly the same way.
+
+Pure stub objects can be created which have no methods - they simply record any method invocations.  Methods of existing objects (including classes) can also be stubbed.
 
 It works by recording all method calls so that assertions can be made about them after the fact and providing a simple
 dsl for setting up stubbed methods (which can be used as expectations to assert on later).
 
-Orangutan can be used with any testing framework and in combination with other mock frameworks.
+All method invocations are reported to the one central array so you can assert method invocations occur across different objects (not that you should want to).
 
 Installation:
 
@@ -88,6 +90,8 @@ register_object :math, Math   # registers the object (this just gives the object
 stub_method :math, :cos       # replaces the implementation of the cos method with a recorder
 so_when(:math).receives(:cos).with(0).return("i just can't take it anymore")
 
+restore_methods # restores any changes made to methods (essential for any class methods that have been stubbed)
+
 # Registering as a mock framework with rspec
 
 require 'orangutan/mock_adapter'
@@ -109,3 +113,7 @@ Definately not.  What a ridiculous question.  I'm appalled.
 * What's Chantek?
 
 Chantek is a famous orangutan that can solve sudokus and the rubik's cube - http://en.wikipedia.org/wiki/Chantek
+
+* Why would you create yet another mocking framework?
+
+Pretty much for the sake of it.  Originally it was an IronRuby contribution but Ivan Porto Carrera has provided a much better mocking solution for that in caricature (see http://github.com/casualjim/caricature).  Now it's just an extremely interesting exercise in learning about metaprogramming in ruby. 
