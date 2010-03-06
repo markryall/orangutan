@@ -82,6 +82,20 @@ calls.each {|call| puts "#{call.name}.#{call.method}(#{call.args.join(',')})" }
 
 # Recorded call sequences can also be used for assertions in combination with or instead of checking expectations.
 
+# Stubbing methods on object instances
+
+register_object :math, Math   # registers the object (this just gives the object a name for referencing in calls)
+stub_method :math, :cos       # replaces the implementation of the cos method with a recorder
+so_when(:math).receives(:cos).with(0).return("i just can't take it anymore")
+
+# Registering as a mock framework with rspec
+
+require 'orangutan/mock_adapter'
+Spec::Runner.configure do |config|
+  # turn off mocking
+  config.mock_with Orangutan::MockAdapter
+end
+
 Questions:
 
 * Why Orangutan?
@@ -95,7 +109,3 @@ Definately not.  What a ridiculous question.  I'm appalled.
 * What's Chantek?
 
 Chantek is a famous orangutan that can solve sudokus and the rubik's cube - http://en.wikipedia.org/wiki/Chantek
-
-* Why do I not need to register this as a mock framework?
-
-Most frameworks such as rspec's mocks, mocha and stubba replace methods on existing classes.  Because this can't be done with this library - you can only create pure stub objects and setup method behaviours, there's nothing that needs to be undone at the end of a test/example.
