@@ -18,6 +18,7 @@ module Orangutan
       @expectations = {}
       @stubs= {}
       @events = {}
+      @stubbed_methods = []
     end
 
     def register_object name, object
@@ -32,6 +33,7 @@ module Orangutan
         @parent = chantek
         @name = name
       end
+      @stubbed_methods << [name, method]
       object.eigen_eval do
         alias_method("__unstubbed_#{method}", method)
       end
@@ -42,6 +44,11 @@ module Orangutan
       @stubs[name].eigen_eval do
         alias_method(method, "__unstubbed_#{method}")
       end
+      @stubbed_methods.delete [name, method]
+    end
+
+    def restore_methods
+      @stubbed_methods.each {|tuple| restore_method tuple[0], tuple[1]}
     end
 
     def stub name, params={}

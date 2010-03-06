@@ -11,6 +11,7 @@ module Orangutan
     end
 
     def teardown_mocks_for_rspec
+      restore_methods
     end
   end
 end
