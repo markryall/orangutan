@@ -7,7 +7,7 @@ require 'orangutan/stub_include'
 
 module Orangutan 
   module Chantek
-    attr_reader :calls, :stubs, :expectations
+    attr_reader :calls, :expectations
 
     def call name, method, *args
       Call.new(name, method, args)
@@ -16,6 +16,7 @@ module Orangutan
     def reset_stubs
       @calls = []
       @expectations = {}
+      @named_expectations = {}
       @stubs= {}
       @events = {}
       @stubbed_methods = []
@@ -92,10 +93,14 @@ module Orangutan
       end
     end
 
-    def so_when name
+    def so_when name, params={}
       expectations_for_name = @expectations[name]
       @expectations[name] = expectations_for_name = [] unless expectations_for_name
       expectation = Orangutan::Expectation.new
+      if params[:as]
+        raise "An expectation called foo_expection was already registered" if @named_expectations[params[:as]]
+        @named_expectations[params[:as]] = expectation
+      end
       expectations_for_name << expectation
       expectation
     end
@@ -117,6 +122,14 @@ module Orangutan
       events_for_name.each do |event_name,delegates|
         delegates.each { |delegate| delegate.invoke *args } if event_name == event
       end
+    end
+    
+    def expectation name
+      @named_expectations[name]
+    end
+    
+    def stub_names
+      @stubs.keys
     end
   end
 end

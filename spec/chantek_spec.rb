@@ -89,4 +89,16 @@ describe 'creating ruby stubs' do
       e.message.should == "you can't be serious"
     end
   end
+  
+  it 'should allow expectations return values to be stubbed' do
+    so_when(:foo, :as => :foo_expectation).receives(:bar)
+    expectation(:foo_expectation).should_not be_matched
+    @foo.bar
+    expectation(:foo_expectation).should be_matched    
+  end
+  
+  it 'should raise error when registering duplicate named execeptions' do
+    so_when(:foo, :as => :foo_expectation).receives(:bar).return('baz')
+    lambda { so_when(:foo, :as => :foo_expectation).receives(:bar).return('baz') }.should raise_error("An expectation called foo_expection was already registered")
+  end
 end
