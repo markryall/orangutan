@@ -15,3 +15,8 @@ module Orangutan
     end
   end
 end
+
+Spec::Runner.configure do |config|
+  # turn off mocking
+  config.mock_with Orangutan::MockAdapter
+end
