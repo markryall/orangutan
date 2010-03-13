@@ -1,6 +1,7 @@
 spec/obj
 spec/*.pdb
 *.swp
+*.gem
 pkg/
 spec/ClassLibrary.dll
 spec/ClassLibrary.sln.cache

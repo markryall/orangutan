@@ -1,0 +1,3 @@
+--- 
+name: allow stub_method to accept a hash for multiple name => method pairs
+id: 7dac5de4-6d7c-4e49-b229-342c4cccce27
