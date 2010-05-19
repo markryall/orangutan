@@ -8,5 +8,5 @@ EOF
   s.authors << 'Mark Ryall'
   s.email = 'mark@ryall.name'
   s.homepage = %q{http://github.com/markryall/orangutan}
-  s.files = Dir['lib/**/*'] + ['README', 'MIT-LICENSE']
+  s.files = Dir['lib/**/*'] + ['README.rdoc', 'MIT-LICENSE']
 end
