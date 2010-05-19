@@ -2,12 +2,11 @@ load 'Gemfile'
 require 'pathname'
 require 'gemesis/rake'
 require 'splat'
-environment = Splat.new
 
 task 'spec/ClassLibrary.dll' => FileList["spec/**/*.cs"] do
-  p = Pathname.new('spec')
+  p = File.dirname('.')+'/spec'
   compiler = ENV['USE_MONO'] ? 'gmcs' : 'csc'
-  sh "#{compiler} /target:library /out:#{environment.clean_path(p+'ClassLibrary.dll')}  #{environment.clean_path(p+'clr'+'*.cs')}"
+  sh "#{compiler} /target:library /out:#{(p+'ClassLibrary.dll').to_os_path}  #{(p+'clr'+'*.cs').to_os_path}"
 end
 
 desc 'build necessary assemblies for tests'
